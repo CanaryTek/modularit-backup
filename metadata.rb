@@ -6,8 +6,8 @@ long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version           "0.1.0"
 recipe            "modularit-backup", "Installs and configures backup server "
 
-%w{apt yum}.each do |pkg|
-  depends pkg
+%w{apt yum rasca}.each do |recipe|
+  depends recipe
 end
 
 %w{redhat centos}.each do |os|

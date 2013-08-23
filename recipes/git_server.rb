@@ -50,6 +50,7 @@ end
 bash "Clone gitolite-admin repo" do
   cwd "/root"
   code "GIT_SSH=/root/bin/gitbackup.sh git clone gitolite@xenc.canarytek.com:gitolite-admin"
+  #code "git clone /var/lib/gitolite/repositories/gitolite-admin.git"
   creates "/root/gitolite-admin"
 end
 
@@ -57,6 +58,7 @@ end
 bash "git-push" do
   cwd "/root/gitolite-admin"
   code "git add . && git commit -m'autocommit' && GIT_SSH=/root/bin/gitbackup.sh git push origin master"
+  #code "chown -R gitolite:gitolite /root/gitolite-admin && git add . && git commit -m'autocommit' && git push origin master"
   action :nothing
 end
 
@@ -73,6 +75,8 @@ nodes.sort! {|a,b| a.name <=> b.name }
 # Main config file
 template "/root/gitolite-admin/conf/gitolite.conf" do
   source 'gitolite_conf.erb'
+  owner "gitolite"
+  group "gitolite"
   variables( 
     :nodes => nodes
   )
@@ -83,6 +87,8 @@ end
 nodes.each do |n|
   if n.has_key?("modularit_backup") && n["modularit_backup"].has_key?("git_ssh_key")
     file "/root/gitolite-admin/keydir/#{n["rasca"]["node_name"]}.pub" do
+      owner "gitolite"
+      group "gitolite"
       content n["modularit_backup"]["git_ssh_key"]
       notifies :run, "bash[git-push]"
     end

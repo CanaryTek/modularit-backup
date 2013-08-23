@@ -20,18 +20,20 @@ Attributes
 
 Read the files, they are well documented (I hope)
 
+Important attributes:
+
+- `node['modularit']['git_backup_remoteurl']`: Defines the base URL used for git backup
+
 Usage
 -----
 
-#### modularit-backup::default
+#### For Git backups
 
-Once the cobbler server is up and running, you can install a new ModularIT base system with the following command:
+1. Install a server, applying `recipe[modularit-backup::git_server]`
 
-    koan --server 192.168.122.163 --virt --virt-name=test1 --profile=modularit-base-x86_64
+2. Define the attribute `node['modularit-backup']['git_backup_baseurl']` for all hosts that will use the previous server
 
-Import CentOS 6 using rsync:
-
-    cobbler import --path=rsync://rsync.cica.es/CentOS/6/os --name=centos6-x86_64 --arch=x86_64
+3. On the clients, include `recipe[modularit-backup::git_client]`
 
 Contributing
 ------------
