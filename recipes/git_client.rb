@@ -34,7 +34,7 @@ end
 
 # Check if a remote git url is defined
 git_url=nil
-if node['modularit'].has_key("git_backup_baseurl")
+if node['modularit'].has_key?("git_backup_baseurl")
   git_url=node['modularit']["git_backup_baseurl"]
 end
 
