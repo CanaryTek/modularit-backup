@@ -1,0 +1,22 @@
+## Created by chef, DO NOT EDIT
+repo    gitolite-admin
+        RW+     =   <%= node['rasca']['node_name'] %>
+
+repo    testing
+        RW+     =   @all
+
+<% @nodes.each do |n| -%>
+# For every node we have at least _etc and _root repos
+repo    <%= n['rasca']['node_name'] %>_etc
+        RW+     =   <%= n['rasca']['node_name'] %>
+repo    <%= n['rasca']['node_name'] %>_root
+        RW+     =   <%= n['rasca']['node_name'] %>
+<% begin -%>
+<% n["modularit_backup"]["git_repos"].each do |repo| -%>
+repo    <%= "#{n['rasca']['node_name']}_#{repo}" %>
+        RW+     =   <%= n['rasca']['node_name'] %>
+<% end -%>
+<% rescue -%>
+<% end -%>
+
+<% end -%>
