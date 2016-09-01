@@ -1,4 +1,5 @@
-maintainer        "Kuko Armas"
+maintainer        "CanaryTek"
+name              "modularit-backup"
 maintainer_email  "kuko@canarytek.com"
 license           "Apache 2.0"
 description       "Installs and configure a ModularIT Backup server with safekeep"
